@@ -1,0 +1,6 @@
+-- TRIPMATE live database: mzmxjlyqmpmdwfdcidby
+-- Tables: trip_settings, members, contributions, expenses, itinerary,
+-- bookings, rooms, transport, gallery, admin_users.
+-- Promote a registered user to admin:
+-- insert into public.admin_users (user_id)
+-- select id from auth.users where email = 'YOUR_EMAIL@example.com';
