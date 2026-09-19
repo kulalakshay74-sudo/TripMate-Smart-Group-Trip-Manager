@@ -84,16 +84,23 @@ function setupToolbars(){
 
 async function start(){
  injectStyle();
- const session=(await db.auth.getSession()).data.session;
- if(!session)return;
- $("loginCard").classList.add("hidden");$("app").classList.remove("hidden");$("signOut").classList.remove("hidden");$("userEmail").textContent=session.user.email||"";
- const admin=await db.from("admin_users").select("user_id").eq("user_id",session.user.id).maybeSingle();
- isAdmin=!!admin.data;
+ const userResult=await db.auth.getUser();
+ const user=userResult.data?.user;
+ if(userResult.error){console.error("Auth user lookup failed",userResult.error);return;}
+ if(!user)return;
+ $("loginCard").classList.add("hidden");$("app").classList.remove("hidden");$("signOut").classList.remove("hidden");$("userEmail").textContent=user.email||"";
+ const admin=await db.rpc("current_user_is_admin");
+ if(admin.error){
+   console.error("Admin role lookup failed",admin.error);
+   isAdmin=false;
+   toast("Admin verification failed: "+admin.error.message);
+ }else{
+   isAdmin=admin.data===true;
+ }
  const badge=$("adminBadge");if(badge)badge.classList.toggle("hidden",!isAdmin);
  setupToolbars();
  await loadAll();
 }
-
 async function loadAll(){
  setLoading(true);
  const names=Object.keys(data);
