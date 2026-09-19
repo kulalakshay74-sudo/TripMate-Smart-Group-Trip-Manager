@@ -1,29 +1,40 @@
 # TRIPMATE — Smart Group Trip Manager
 
-A Supabase-backed group trip management application.
+Professional Supabase-powered group-trip operations platform.
 
-## Features
-- Dashboard with expected, collected, pending, expenses and balance
-- Trip itinerary
-- Members and contributions
-- Expenses
-- Resort booking and rooms
-- Transport
-- Shared gallery
-- Supabase authentication
-- Admin and read-only user access
+## Live capabilities
+- Secure Supabase Authentication
+- Role-based Admin / Read-only user access
+- Dashboard financial KPIs
+- Member directory and contribution tracking
+- Payment recording and finance export
+- Expense management
+- Day-wise itinerary
+- Google Maps links
+- Resort/booking management
+- Room allocation
+- Transport and driver management
+- Gallery moderation
+- Admin create/edit/delete workflows
+- Trip settings administration
+- Supabase Row Level Security
+- Responsive desktop/mobile interface
+
+## Technology
+Vanilla HTML, CSS and JavaScript + Supabase Auth/Postgres/Data API.
 
 ## Supabase
 Project: TRIPMATE
 Project ID: mzmxjlyqmpmdwfdcidby
 Region: ap-south-1 (Mumbai)
-URL: https://mzmxjlyqmpmdwfdcidby.supabase.co
+
+Only the Supabase publishable key is used in the browser. Never expose a service-role or secret key.
+
+## Admin
+The registered account used for this project is promoted to administrator in the database. Sign in normally; the Admin tab and CRUD controls appear automatically.
 
 ## Run locally
-Open the project with VS Code and use Live Server to run index.html.
+Open the repository in VS Code and use Live Server, or serve the folder with any static HTTP server. Do not open the HTML with an unsupported file:// setup if your browser blocks module/CDN requests.
 
-Register or sign in using Supabase Auth. To make a registered account an administrator, run:
-insert into public.admin_users (user_id)
-select id from auth.users where email = 'YOUR_EMAIL@example.com';
-
-Never expose a Supabase service-role key in frontend code.
+## Security
+All application tables have RLS enabled. Authenticated users can read trip data; only accounts present in `admin_users` can create, update or delete operational records.
